@@ -390,16 +390,20 @@ u8 GetCurrentPartyLevelCap(void)
         return MAX_LEVEL;
     
     if (gSaveBlock1Ptr->tx_Challenges_LevelCap == 1) //normal level cap
+    {
         if (gSaveBlock2Ptr->optionsDifficulty == 2) //hard difficulty
             return sLevelCapTable_Normal_Caps_And_Hard_Mode[badgeCount];
         else
             return sLevelCapTable_Normal[badgeCount];
+    }
 
     if (gSaveBlock1Ptr->tx_Challenges_LevelCap == 2) //hard level cap
+    {
         if (gSaveBlock2Ptr->optionsDifficulty == 2) //hard difficulty
             return sLevelCapTable_Hard_Caps_And_Hard_Mode[badgeCount];
         else
             return sLevelCapTable_Hard[badgeCount];
+    }
 
     return MAX_LEVEL;
 }

@@ -1184,11 +1184,15 @@ static void Cmd_accuracycheck(void)
         if (gBattleMons[gBattlerTarget].ability == ABILITY_ILLUMINATE)
             calc = (calc * 90) / 100; // 1.1 illuminate loss
         if (gSaveBlock2Ptr->optionStyle == 1)
+        {
             if (gBattleMons[gBattlerAttacker].ability == ABILITY_HUSTLE && IS_TYPE_PHYSICAL(type))
                 calc = (calc * 80) / 100; // 1.2 hustle loss
+        }
         else if (gSaveBlock2Ptr->optionStyle == 0)
+        {
             if (gBattleMons[gBattlerAttacker].ability == ABILITY_HUSTLE && IS_MOVE_PHYSICAL(move))
                 calc = (calc * 80) / 100; // 1.2 hustle loss
+        }
 
         if (gBattleMons[gBattlerTarget].item == ITEM_ENIGMA_BERRY)
         {
@@ -3851,7 +3855,7 @@ static void Cmd_getexp(void)
                 if ((gSaveBlock1Ptr->tx_Difficulty_HardExp == 0) && (FlagGet(FLAG_IS_CHAMPION) == FALSE)) 
                 //Exp decrease for HARD MODE (60%)
                     calculatedExp *= 0.60;
-                else if ((gSaveBlock1Ptr->tx_Difficulty_HardExp == 1) || (gSaveBlock1Ptr->tx_Difficulty_HardExp == 0) && (FlagGet(FLAG_IS_CHAMPION) == TRUE)) 
+                else if ((gSaveBlock1Ptr->tx_Difficulty_HardExp == 1) || ((gSaveBlock1Ptr->tx_Difficulty_HardExp == 0) && (FlagGet(FLAG_IS_CHAMPION) == TRUE))) 
                 //Maintain default exp. gain for HARD MODE
                 //Also the option gets disabled after becoming champion because there's easy access to EXP. training.
                 //The Flag checks ensure save compatibility, as you'd need to become champion again in old saves for this to activate.
@@ -4006,18 +4010,22 @@ static void Cmd_getexp(void)
                 if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP) && !GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_IS_EGG))
                 {
                     if (FlagGet(FLAG_EXP_SHARE) == TRUE)
+                    {
                         if (gBattleStruct->sentInPokes & (1 << gBattleStruct->expGetterMonId))
                             gBattleMoveDamage = *exp;
                         else if (gExpShareCheck)
                             gBattleMoveDamage += gExpShareExp;
                         else
                             gBattleMoveDamage = 0;
+                    }
 
                     if (FlagGet(FLAG_EXP_SHARE) == FALSE)
+                    {
                         if (gBattleStruct->sentInPokes & 1)
                             gBattleMoveDamage = *exp;
                         else
                             gBattleMoveDamage = 0;
+                    }
 
                     if ((holdEffect == HOLD_EFFECT_EXP_SHARE) && ((FlagGet(FLAG_EXP_SHARE) == FALSE)))
                         gBattleMoveDamage += gExpShareExp;
